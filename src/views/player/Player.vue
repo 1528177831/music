@@ -71,9 +71,13 @@ export default {
     },
     removeEventListenerHandler () {
       // 当前实时播放的时间
-      this.$refs.player.removeEventListener('timeupdate', this.currentTime = this.$refs.player.currentTime)
+      this.$refs.player.removeEventListener('timeupdate', (time) => {
+        this.currentTime = this.$refs.player.currentTime
+      })
       // 获取播放总时间
-      this.$refs.player.removeEventListener('canplay', this.duration = this.$refs.player.duration)
+      this.$refs.player.removeEventListener('canplay', (time) => {
+        this.duration = this.$refs.player.duration
+      })
     },
     getAllKey (lrcdata) {
       for (var key in lrcdata) {
@@ -117,18 +121,10 @@ export default {
       this.getAllKey(lrcObj)
     })
   },
-  updated () {
-    this.removeEventListenerHandler()
-  },
-  beforeRouteLeave (to, from, next) {
-    // ...
-    this.$destroy()
-    next()
-  },
-  destroyed () {
+  beforeDestroy () {
     this.showNavBar()
+    this.$refs.player.stop()
     this.removeEventListenerHandler()
-    console.log('销毁成功')
   }
 }
 </script>

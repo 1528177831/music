@@ -48,8 +48,22 @@ export default {
       if (val == '') {
         this.clearSearchList()
       } else {
-        this.getSearchList(val)
+        this.throttle(this.getSearchList(val),2000)
       }
+    },
+    throttle(funcName,delay){
+        var timer = null;
+        return function(){
+            const content = this;
+            const args = [...arguments];
+            if(!timer){
+                timer = setTimeout(function(){
+                    funcName.apply(content,args);
+                    clearTimeout(timer);
+                    timer = null;
+                } ,delay)
+            }
+        }
     }
   },
   mounted () {
