@@ -31,10 +31,6 @@
       </div>
     </div>
     <div class="song">
-      <!--
-        当前正在播放的时间
-        当前歌曲的总时间
-       -->
       <audio ref="player" :src="song.url" controls></audio>
     </div>
   </div>
